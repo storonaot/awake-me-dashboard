@@ -1,11 +1,17 @@
-import { LoginForm } from '@/features/auth/ui/LoginForm'
+import { LogoutButton } from '@/features/auth/ui/LogoutButton'
+import { AuthGate } from './providers/auth-gate/AuthGate'
+
+const Dashboard = () => {
+  return <div>Dashboard</div>
+}
 
 const App = () => {
   return (
-    <>
+    <AuthGate>
       AwakeME
-      <LoginForm />
-    </>
+      <LogoutButton />
+      <Dashboard />
+    </AuthGate>
   )
 }
 
