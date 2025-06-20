@@ -14,6 +14,12 @@ import type { NewProject, Project } from './types'
 import { PROJECT_FIELDS, PROJECTS_COLLECTION_NAME } from './constants'
 
 export const addProject = async (title: string): Promise<string> => {
+  const exists = await checkProjectExists(title)
+
+  if (exists) {
+    throw new Error('Проект с таким названием уже существует')
+  }
+
   const newProject: NewProject = {
     title,
     isArchived: false,
@@ -55,4 +61,16 @@ export const hideProject = async (id: string): Promise<void> => {
 export const deleteProject = async (id: string): Promise<void> => {
   const ref = doc(db, PROJECTS_COLLECTION_NAME, id)
   await deleteDoc(ref)
+}
+
+// ——— helpers ———
+
+async function checkProjectExists(title: string) {
+  const q = query(
+    collection(db, PROJECTS_COLLECTION_NAME),
+    where(PROJECT_FIELDS.title, '==', title),
+    where(PROJECT_FIELDS.isArchived, '==', false)
+  )
+  const snapshot = await getDocs(q)
+  return !snapshot.empty
 }

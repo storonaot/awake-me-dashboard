@@ -7,12 +7,17 @@ const AddProjectForm = () => {
     addProject: { mutate, isPending },
   } = useProjectActions()
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
     if (!title.trim()) return
 
     mutate(title, {
-      onSuccess: () => setTitle(''),
+      onSuccess: () => {
+        setTitle('')
+      },
+      onError: () => {
+        setTitle('')
+      },
     })
   }
 

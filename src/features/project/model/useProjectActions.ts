@@ -12,6 +12,9 @@ export const useProjectActions = () => {
   const addMutation = useMutation({
     mutationFn: addProjectAPI,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['projects'] }),
+    onError: (error: Error) => {
+      alert(error.message)
+    },
   })
 
   const deleteMutation = useMutation({
