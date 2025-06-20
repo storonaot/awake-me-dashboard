@@ -1,15 +1,17 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
-  deleteProject as deleteProjectAPI,
-  archiveProject as archiveProjectAPI,
-  hideProject as hideProjectAPI,
-  addProject as addProjectAPI,
+  deleteProjectAPI,
+  updateProjectAPI,
+  addProjectAPI,
+  PROJECT_FIELDS,
 } from '@/entities/project/model'
 
 export const useProjectActions = () => {
   const queryClient = useQueryClient()
 
-  const addMutation = useMutation({
+  const _invalidate = () => queryClient.invalidateQueries({ queryKey: ['projects'] })
+
+  const add = useMutation({
     mutationFn: addProjectAPI,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['projects'] }),
     onError: (error: Error) => {
@@ -17,25 +19,25 @@ export const useProjectActions = () => {
     },
   })
 
-  const deleteMutation = useMutation({
+  const remove = useMutation({
     mutationFn: deleteProjectAPI,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['projects'] }),
   })
 
-  const archiveMutation = useMutation({
-    mutationFn: archiveProjectAPI,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['projects'] }),
+  const archive = useMutation({
+    mutationFn: (id: string) => updateProjectAPI(id, { [PROJECT_FIELDS.isArchived]: true }),
+    onSuccess: _invalidate,
   })
 
-  const hideMutation = useMutation({
-    mutationFn: hideProjectAPI,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['projects'] }),
+  const hide = useMutation({
+    mutationFn: (id: string) => updateProjectAPI(id, { [PROJECT_FIELDS.isHidden]: true }),
+    onSuccess: _invalidate,
   })
 
   return {
-    addProject: addMutation,
-    deleteProject: deleteMutation,
-    archiveProject: archiveMutation,
-    hideProject: hideMutation,
+    addProject: add,
+    deleteProject: remove,
+    archiveProject: archive,
+    hideProject: hide,
   }
 }

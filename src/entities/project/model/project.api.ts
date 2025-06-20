@@ -9,11 +9,12 @@ import {
   doc,
   updateDoc,
   deleteDoc,
+  type PartialWithFieldValue,
 } from 'firebase/firestore'
 import type { NewProject, Project } from './types'
 import { PROJECT_FIELDS, PROJECTS_COLLECTION_NAME } from './constants'
 
-export const addProject = async (title: string): Promise<string> => {
+export const addProjectAPI = async (title: string): Promise<string> => {
   const exists = await checkProjectExists(title)
 
   if (exists) {
@@ -32,7 +33,7 @@ export const addProject = async (title: string): Promise<string> => {
   return docRef.id
 }
 
-export const getProjects = async (): Promise<Project[]> => {
+export const getProjectsAPI = async (): Promise<Project[]> => {
   const q = query(
     collection(db, PROJECTS_COLLECTION_NAME),
     where(PROJECT_FIELDS.isArchived, '==', false),
@@ -48,23 +49,20 @@ export const getProjects = async (): Promise<Project[]> => {
   })) as Project[]
 }
 
-export const archiveProject = async (id: string): Promise<void> => {
+export const updateProjectAPI = async (
+  id: string,
+  updates: PartialWithFieldValue<Project>
+): Promise<void> => {
   const ref = doc(db, PROJECTS_COLLECTION_NAME, id)
-  await updateDoc(ref, { [PROJECT_FIELDS.isArchived]: true })
+  await updateDoc(ref, updates)
 }
 
-export const hideProject = async (id: string): Promise<void> => {
-  const ref = doc(db, PROJECTS_COLLECTION_NAME, id)
-  await updateDoc(ref, { [PROJECT_FIELDS.isHidden]: true })
-}
-
-export const deleteProject = async (id: string): Promise<void> => {
+export const deleteProjectAPI = async (id: string): Promise<void> => {
   const ref = doc(db, PROJECTS_COLLECTION_NAME, id)
   await deleteDoc(ref)
 }
 
 // ——— helpers ———
-
 async function checkProjectExists(title: string) {
   const q = query(
     collection(db, PROJECTS_COLLECTION_NAME),
