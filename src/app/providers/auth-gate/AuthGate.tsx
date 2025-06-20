@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react'
-import { LoginForm } from '@/features/auth/ui/LoginForm'
+import { LoginForm } from '@/features/auth/ui'
 import { useAuthGate } from './useAuthGate'
 
 export const AuthGate = ({ children }: { children: ReactNode }) => {

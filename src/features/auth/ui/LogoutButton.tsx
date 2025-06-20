@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
-import { logout } from '../../model/auth.api'
+import { logout } from '../model/auth.api'
 
-export const LogoutButton = () => {
+const LogoutButton = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: logout,
   })
@@ -12,3 +12,5 @@ export const LogoutButton = () => {
     </button>
   )
 }
+
+export default LogoutButton

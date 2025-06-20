@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
-import { login } from '../../model/auth.api'
+import { login } from '../model/auth.api'
 
 const LoginForm = () => {
   const [email, setEmail] = useState('')
@@ -49,4 +49,4 @@ const LoginForm = () => {
   )
 }
 
-export { LoginForm }
+export default LoginForm
