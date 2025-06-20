@@ -4,7 +4,7 @@ import {
   archiveProject as archiveProjectAPI,
   hideProject as hideProjectAPI,
   addProject as addProjectAPI,
-} from './project.api'
+} from '@/entities/project/model'
 
 export const useProjectActions = () => {
   const queryClient = useQueryClient()

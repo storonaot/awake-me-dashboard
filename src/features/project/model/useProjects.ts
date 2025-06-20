@@ -1,5 +1,5 @@
+import { getProjects } from '@/entities/project/model'
 import { useQuery } from '@tanstack/react-query'
-import { getProjects } from './project.api'
 
 export const useProjects = () => {
   return useQuery({
