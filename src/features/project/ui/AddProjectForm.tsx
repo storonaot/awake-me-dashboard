@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useProjectActions } from '../model'
+import { Button } from '@/shared/ui'
 
 const AddProjectForm = () => {
   const [title, setTitle] = useState('')
@@ -30,9 +31,9 @@ const AddProjectForm = () => {
         onChange={e => setTitle(e.target.value)}
         required
       />
-      <button type="submit" disabled={isPending}>
+      <Button type="submit" disabled={isPending}>
         Добавить
-      </button>
+      </Button>
     </form>
   )
 }
