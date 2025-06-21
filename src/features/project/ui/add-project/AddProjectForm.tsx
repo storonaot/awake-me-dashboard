@@ -1,29 +1,29 @@
 import { useState } from 'react'
-import { Button, Input } from '@/shared/ui'
 import { useProjectActions } from '../../model'
+import { Button, Input } from '@/shared/ui'
 
-const AddProjectForm = () => {
+type Props = {
+  onAfterCreate?: () => void
+}
+
+const AddProjectForm = ({ onAfterCreate }: Props) => {
   const [title, setTitle] = useState('')
   const {
     addProject: { mutate, isPending },
   } = useProjectActions()
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault()
+  const handleAdd = (closeAfter = false) => {
     if (!title.trim()) return
-
     mutate(title, {
       onSuccess: () => {
         setTitle('')
-      },
-      onError: () => {
-        setTitle('')
+        if (closeAfter) onAfterCreate?.()
       },
     })
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 8 }}>
+    <div className="flex flex-col gap-4">
       <Input
         type="text"
         placeholder="Название проекта"
@@ -31,10 +31,15 @@ const AddProjectForm = () => {
         onChange={e => setTitle(e.target.value)}
         required
       />
-      <Button type="submit" disabled={isPending}>
-        Добавить
-      </Button>
-    </form>
+      <div className="flex gap-2 justify-end">
+        <Button disabled={isPending} onClick={() => handleAdd(false)}>
+          Добавить
+        </Button>
+        <Button disabled={isPending} onClick={() => handleAdd(true)} variant="secondary">
+          Добавить и закрыть
+        </Button>
+      </div>
+    </div>
   )
 }
 

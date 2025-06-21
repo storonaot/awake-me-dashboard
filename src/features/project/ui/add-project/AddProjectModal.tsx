@@ -6,22 +6,27 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/shared/ui'
+import { useState } from 'react'
 import AddProjectForm from './AddProjectForm'
 
-const AddProjectModal = () => (
-  <Dialog>
-    <DialogTrigger asChild>
-      <Button variant="default" size="icon">
-        +
-      </Button>
-    </DialogTrigger>
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Добавить проект</DialogTitle>
-      </DialogHeader>
-      <AddProjectForm />
-    </DialogContent>
-  </Dialog>
-)
+const AddProjectModal = () => {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="default" size="icon">
+          +
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Добавить проект</DialogTitle>
+        </DialogHeader>
+        <AddProjectForm onAfterCreate={() => setOpen(false)} />
+      </DialogContent>
+    </Dialog>
+  )
+}
 
 export default AddProjectModal
