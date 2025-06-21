@@ -1,3 +1,4 @@
-export { default as AddProjectForm } from './add-project/AddProjectForm'
-export { default as AddProjectModal } from './add-project/AddProjectModal'
+export { default as ProjectForm } from './ProjectForm'
+export { default as AddProjectModal } from './AddProjectModal'
 export { default as ProjectList } from './ProjectList'
+export { default as ProjectActionsMenu } from './ProjectActionsMenu'

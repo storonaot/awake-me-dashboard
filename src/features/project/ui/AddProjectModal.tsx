@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from '@/shared/ui'
 import { useState } from 'react'
-import AddProjectForm from './AddProjectForm'
+import ProjectForm from './ProjectForm'
 
 const AddProjectModal = () => {
   const [open, setOpen] = useState(false)
@@ -23,7 +23,7 @@ const AddProjectModal = () => {
         <DialogHeader>
           <DialogTitle>Добавить проект</DialogTitle>
         </DialogHeader>
-        <AddProjectForm onAfterCreate={() => setOpen(false)} />
+        <ProjectForm onAfterCreate={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   )

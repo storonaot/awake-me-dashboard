@@ -4,6 +4,7 @@ import {
   updateProjectAPI,
   addProjectAPI,
   PROJECT_FIELDS,
+  type Project,
 } from '@/entities/project/model'
 
 export const useProjectActions = () => {
@@ -34,10 +35,17 @@ export const useProjectActions = () => {
     onSuccess: _invalidate,
   })
 
+  const update = useMutation({
+    mutationFn: ({ id, payload }: { id: string; payload: Partial<Omit<Project, 'id'>> }) =>
+      updateProjectAPI(id, payload),
+    onSuccess: _invalidate,
+  })
+
   return {
     addProject: add,
     deleteProject: remove,
     archiveProject: archive,
     hideProject: hide,
+    updateProject: update,
   }
 }
