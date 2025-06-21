@@ -1,15 +1,15 @@
-import { LogoutButton } from '@/features/auth/ui'
 import { AuthGate } from './providers/auth-gate/AuthGate'
 import { TodayProjects } from '@/widgets/today-projects/ui'
-import { MonthlyStats } from '@/widgets/monthly-stats/ui'
+// import { MonthlyStats } from '@/widgets/monthly-stats/ui'
+import { MainLayout } from './layouts'
 
 const App = () => {
   return (
     <AuthGate>
-      AwakeME
-      <LogoutButton />
-      <TodayProjects />
-      <MonthlyStats />
+      <MainLayout>
+        <TodayProjects />
+        {/* <MonthlyStats /> */}
+      </MainLayout>
     </AuthGate>
   )
 }

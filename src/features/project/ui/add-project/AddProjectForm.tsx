@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useProjectActions } from '../model'
 import { Button } from '@/shared/ui'
+import { useProjectActions } from '../../model'
 
 const AddProjectForm = () => {
   const [title, setTitle] = useState('')
