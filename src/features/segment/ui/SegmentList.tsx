@@ -2,6 +2,7 @@ import { SegmentCell } from '@/entities/segment/ui'
 import { useSegmentActions, useSegments } from '../model'
 
 import { format } from 'date-fns'
+import { Button } from '@/shared/ui'
 
 const today = format(new Date(), 'yyyy-MM-dd')
 
@@ -23,12 +24,12 @@ const SegmentList = ({ date, projectId }: SegmentListProps) => {
   if (error) return <div>Ошибка загрузки сегментов</div>
 
   return (
-    <div style={{ display: 'flex', gap: 4 }}>
+    <>
       {(data || []).map(segment => (
         <SegmentCell key={segment.id} segment={segment} />
       ))}
-      <button onClick={createSegment}>+</button>
-    </div>
+      <Button onClick={createSegment}>+</Button>
+    </>
   )
 }
 

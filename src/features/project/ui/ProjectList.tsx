@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 import { useProjectActions, useProjects } from '../model'
 import { SegmentList } from '@/features/segment/ui'
 import { format } from 'date-fns'
+import { Button } from '@/shared/ui'
 
 const today = format(new Date(), 'yyyy-MM-dd')
 
@@ -36,15 +37,20 @@ const ProjectList = () => {
   if (!data?.length) return <p>Проектов пока нет</p>
 
   return (
-    <ul>
+    <ul className="grid gap-2">
       {data.map(project => (
-        <li key={project.id}>
-          <span style={{ width: 200 }}>{project.title}</span>
-          <SegmentList projectId={project.id} date={today} />
-          <div>
-            <button onClick={() => handleArchive(project.id)}>архив</button>{' '}
-            <button onClick={() => handleHide(project.id)}>скрыть</button>{' '}
-            <button onClick={() => handleDelete(project.id)}>удалить</button>
+        <li
+          key={project.id}
+          className="grid grid-cols-[1fr_auto_auto] items-center gap-4 p-2 border rounded-md"
+        >
+          <span className="truncate">{project.title}</span>
+          <div className="flex flex-wrap gap-1">
+            <SegmentList projectId={project.id} date={today} />
+          </div>
+          <div className="flex gap-1">
+            <Button onClick={() => handleArchive(project.id)}>архив</Button>{' '}
+            <Button onClick={() => handleHide(project.id)}>скрыть</Button>{' '}
+            <Button onClick={() => handleDelete(project.id)}>удалить</Button>
           </div>
         </li>
       ))}

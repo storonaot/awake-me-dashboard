@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { logout } from '../model/auth.api'
+import { Button } from '@/shared/ui'
 
 const LogoutButton = () => {
   const { mutate, isPending } = useMutation({
@@ -7,9 +8,14 @@ const LogoutButton = () => {
   })
 
   return (
-    <button onClick={() => mutate()} disabled={isPending}>
-      Выйти
-    </button>
+    <Button
+      onClick={() => {
+        mutate()
+      }}
+      disabled={isPending}
+    >
+      LogOut
+    </Button>
   )
 }
 
