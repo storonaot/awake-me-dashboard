@@ -1,6 +1,4 @@
 import { AddProjectModal, ProjectList } from '@/features/project/ui'
-import { Button } from '@/shared/ui'
-import { DialogTrigger } from '@/shared/ui/dialog'
 import { format } from 'date-fns'
 
 const TodayProjects = () => {

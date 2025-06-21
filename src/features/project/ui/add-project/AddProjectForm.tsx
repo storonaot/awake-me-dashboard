@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button } from '@/shared/ui'
+import { Button, Input } from '@/shared/ui'
 import { useProjectActions } from '../../model'
 
 const AddProjectForm = () => {
@@ -24,7 +24,7 @@ const AddProjectForm = () => {
 
   return (
     <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 8 }}>
-      <input
+      <Input
         type="text"
         placeholder="Название проекта"
         value={title}

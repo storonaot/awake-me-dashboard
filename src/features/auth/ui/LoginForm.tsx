@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { login } from '../model/auth.api'
+import { Button, Input } from '@/shared/ui'
 
 const LoginForm = () => {
   const [email, setEmail] = useState('')
@@ -25,23 +26,23 @@ const LoginForm = () => {
       onSubmit={handleSubmit}
       style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '300px' }}
     >
-      <input
+      <Input
         type="email"
         placeholder="Email"
         value={email}
         onChange={e => setEmail(e.target.value)}
         required
       />
-      <input
+      <Input
         type="password"
         placeholder="Пароль"
         value={password}
         onChange={e => setPassword(e.target.value)}
         required
       />
-      <button type="submit" disabled={isPending}>
+      <Button type="submit" disabled={isPending}>
         Войти
-      </button>
+      </Button>
 
       {isError && <p style={{ color: 'red' }}>{(error as Error).message}</p>}
       {haveLoggedIn && <p style={{ color: 'green' }}>U have logged in</p>}
