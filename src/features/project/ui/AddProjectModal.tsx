@@ -23,7 +23,7 @@ const AddProjectModal = () => {
         <DialogHeader>
           <DialogTitle>Добавить проект</DialogTitle>
         </DialogHeader>
-        <ProjectForm onAfterCreate={() => setOpen(false)} />
+        <ProjectForm onAfterSubmit={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   )

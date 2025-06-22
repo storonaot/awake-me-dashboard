@@ -29,8 +29,6 @@ export const addSegmentAPI = async ({
   label,
   duration,
 }: AddSegmentsParams): Promise<string> => {
-  console.log('Adding segment with:', { projectId, date, label, duration })
-
   const newSegment: NewSegment = {
     projectId,
     date,
