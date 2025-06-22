@@ -64,6 +64,7 @@ const SegmentGroup = ({ date, projectId }: SegmentGroupProps) => {
               <Trash size={16} />
             </Button>
           </div>
+          <div>{data.label}</div>
         </>
       ) : (
         <Button size="icon" variant="ghost" onClick={() => setIsAddOpen(true)}>
