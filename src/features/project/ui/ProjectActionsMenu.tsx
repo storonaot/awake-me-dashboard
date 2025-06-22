@@ -13,6 +13,7 @@ type ProjectActionsMenuProps = {
   onHide: () => void
   onEdit: () => void
   onDelete: () => void
+  disabled?: boolean
 }
 
 const ProjectActionsMenu: FC<ProjectActionsMenuProps> = ({
@@ -20,10 +21,11 @@ const ProjectActionsMenu: FC<ProjectActionsMenuProps> = ({
   onHide,
   onEdit,
   onDelete,
+  disabled,
 }) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild disabled={disabled}>
         <Button variant="ghost" size="icon">
           <MoreHorizontal />
         </Button>

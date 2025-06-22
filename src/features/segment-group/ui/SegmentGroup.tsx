@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type FC } from 'react'
 import { Pencil, Trash } from 'lucide-react'
 import { Button } from '@/shared/ui'
 import {
@@ -10,13 +10,15 @@ import {
   AddSegmentGroupModal,
   EditSegmentGroupModal,
 } from '@/features/segment-group/ui'
+import { cn } from '@/shared/libs/utils'
 
 type SegmentGroupProps = {
   date: string
   projectId: string
+  disabled?: boolean
 }
 
-const SegmentGroup = ({ date, projectId }: SegmentGroupProps) => {
+const SegmentGroup: FC<SegmentGroupProps> = ({ date, projectId, disabled }) => {
   const { data, isLoading, error } = useSegmentGroupByProjectAndDate({ projectId, date })
   const { updateSegmentGroup, deleteSegmentGroup } = useSegmentGroupActions()
 
@@ -45,47 +47,54 @@ const SegmentGroup = ({ date, projectId }: SegmentGroupProps) => {
   if (error) return <div>Ошибка загрузки сегментов</div>
 
   return (
-    <div className="flex items-center gap-2">
-      {data ? (
-        <>
-          {Array.from({ length: data.total }).map((_, index) => (
-            <SegmentCell
-              key={index}
-              index={index}
-              onToggle={() => toggleComplete(index)}
-              isCompleted={index < (data.completed || 0)}
+    <div className="relative">
+      <div className={cn('transition-all', disabled && 'pointer-events-none opacity-50 grayscale')}>
+        <div className="flex items-center gap-2">
+          {data ? (
+            <>
+              {Array.from({ length: data.total }).map((_, index) => (
+                <SegmentCell
+                  key={index}
+                  index={index}
+                  onToggle={() => toggleComplete(index)}
+                  isCompleted={index < (data.completed || 0)}
+                />
+              ))}
+              <div className="flex gap-1">
+                <Button size="icon" variant="ghost" onClick={() => setIsEditOpen(true)}>
+                  <Pencil size={16} />
+                </Button>
+                <Button size="icon" variant="ghost" onClick={handleDelete}>
+                  <Trash size={16} />
+                </Button>
+              </div>
+              <div>{data.label}</div>
+            </>
+          ) : (
+            <Button size="icon" variant="ghost" onClick={() => setIsAddOpen(true)}>
+              +
+            </Button>
+          )}
+
+          <AddSegmentGroupModal
+            open={isAddOpen}
+            onOpenChange={setIsAddOpen}
+            projectId={projectId}
+            date={date}
+          />
+
+          {data && (
+            <EditSegmentGroupModal
+              open={isEditOpen}
+              onOpenChange={setIsEditOpen}
+              segmentGroupId={data.id}
+              initialValues={{ label: data.label ?? '', total: data.total }}
             />
-          ))}
-          <div className="flex gap-1">
-            <Button size="icon" variant="ghost" onClick={() => setIsEditOpen(true)}>
-              <Pencil size={16} />
-            </Button>
-            <Button size="icon" variant="ghost" onClick={handleDelete}>
-              <Trash size={16} />
-            </Button>
-          </div>
-          <div>{data.label}</div>
-        </>
-      ) : (
-        <Button size="icon" variant="ghost" onClick={() => setIsAddOpen(true)}>
-          +
-        </Button>
-      )}
-
-      <AddSegmentGroupModal
-        open={isAddOpen}
-        onOpenChange={setIsAddOpen}
-        projectId={projectId}
-        date={date}
-      />
-
-      {data && (
-        <EditSegmentGroupModal
-          open={isEditOpen}
-          onOpenChange={setIsEditOpen}
-          segmentGroupId={data.id}
-          initialValues={{ label: data.label ?? '', total: data.total }}
-        />
+          )}
+        </div>
+      </div>
+      {disabled && (
+        <div className="absolute inset-0 z-10 bg-white/50 backdrop-blur-sm rounded-md" />
       )}
     </div>
   )

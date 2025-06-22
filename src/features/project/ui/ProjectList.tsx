@@ -4,6 +4,7 @@ import { useProjectActions, useProjects } from '../model'
 import { EditProjectModal, ProjectActionsMenu } from './index'
 import { SegmentGroup } from '@/features/segment-group/ui'
 import { Button } from '@/shared/ui'
+import { cn } from '@/shared/libs/utils'
 
 const getFormattedTitle = (date: Date): string => {
   const formattedDate = format(date, 'd MMMM, EEEE').toUpperCase() // например: 21 JUNE
@@ -66,7 +67,14 @@ const ProjectList = () => {
         <Button onClick={goToPreviousDay} variant="outline">
           ←
         </Button>
-        <h2 className="text-lg font-medium text-center">{formattedTitle}</h2>
+        <h2
+          className={cn(
+            'text-lg font-medium text-center transition-colors',
+            isPast ? 'text-muted-foreground' : 'text-foreground'
+          )}
+        >
+          {formattedTitle}
+        </h2>
         <Button onClick={goToNextDay} variant="outline">
           →
         </Button>
@@ -92,6 +100,7 @@ const ProjectList = () => {
                 onHide={() => handleHide(project.id)}
                 onDelete={() => handleDelete(project.id)}
                 onEdit={() => setEditModalProject({ id: project.id, title: project.title })}
+                disabled={isPast}
               />
             </div>
           </li>
