@@ -29,6 +29,10 @@ const ProjectActionsMenu: FC<ProjectActionsMenuProps> = ({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={onEdit}>
+          <Pencil className="mr-2 h-4 w-4" />
+          Редактировать
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={onArchive}>
           <Archive className="mr-2 h-4 w-4" />
           Архив
@@ -37,12 +41,9 @@ const ProjectActionsMenu: FC<ProjectActionsMenuProps> = ({
           <EyeOff className="mr-2 h-4 w-4" />
           Скрыть
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={onEdit}>
-          <Pencil className="mr-2 h-4 w-4" />
-          Редактировать
-        </DropdownMenuItem>
+
         <DropdownMenuItem onClick={onDelete} className="text-red-500 focus:text-red-500">
-          <Trash className="mr-2 h-4 w-4" />
+          <Trash className="mr-2 h-4 w-4 text-red-500 focus:text-red-500" />
           Удалить
         </DropdownMenuItem>
       </DropdownMenuContent>

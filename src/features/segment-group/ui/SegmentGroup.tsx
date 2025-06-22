@@ -50,7 +50,6 @@ const SegmentGroup = ({ date, projectId }: SegmentGroupProps) => {
               isCompleted={index < (data.completed || 0)}
             />
           ))}
-
           <Button size="icon" variant="ghost" onClick={() => setIsEditOpen(true)}>
             <Pencil size={16} />
           </Button>

@@ -47,7 +47,7 @@ const ProjectList = () => {
         {data.map(project => (
           <li
             key={project.id}
-            className="grid grid-cols-[1fr_auto_auto] items-center gap-4 p-2 border rounded-md"
+            className="grid grid-cols-[1fr_7fr_auto] items-center gap-4 p-2 border rounded-md"
           >
             <span className="truncate">{project.title}</span>
             <div className="flex flex-wrap gap-1">
