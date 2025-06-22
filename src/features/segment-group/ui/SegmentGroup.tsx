@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Pencil } from 'lucide-react'
+import { Pencil, Trash } from 'lucide-react'
 import { Button } from '@/shared/ui'
 import {
   useSegmentGroupByProjectAndDate,
@@ -18,13 +18,10 @@ type SegmentGroupProps = {
 
 const SegmentGroup = ({ date, projectId }: SegmentGroupProps) => {
   const { data, isLoading, error } = useSegmentGroupByProjectAndDate({ projectId, date })
-  const { updateSegmentGroup } = useSegmentGroupActions()
+  const { updateSegmentGroup, deleteSegmentGroup } = useSegmentGroupActions()
 
   const [isAddOpen, setIsAddOpen] = useState(false)
   const [isEditOpen, setIsEditOpen] = useState(false)
-
-  if (isLoading) return <div>Загрузка сегментов...</div>
-  if (error) return <div>Ошибка загрузки сегментов</div>
 
   const toggleComplete = (index: number) => {
     if (!data) return
@@ -38,6 +35,15 @@ const SegmentGroup = ({ date, projectId }: SegmentGroupProps) => {
     })
   }
 
+  const handleDelete = () => {
+    if (data) {
+      deleteSegmentGroup.mutate(data.id)
+    }
+  }
+
+  if (isLoading) return <div>Загрузка сегментов...</div>
+  if (error) return <div>Ошибка загрузки сегментов</div>
+
   return (
     <div className="flex items-center gap-2">
       {data ? (
@@ -50,9 +56,14 @@ const SegmentGroup = ({ date, projectId }: SegmentGroupProps) => {
               isCompleted={index < (data.completed || 0)}
             />
           ))}
-          <Button size="icon" variant="ghost" onClick={() => setIsEditOpen(true)}>
-            <Pencil size={16} />
-          </Button>
+          <div className="flex gap-1">
+            <Button size="icon" variant="ghost" onClick={() => setIsEditOpen(true)}>
+              <Pencil size={16} />
+            </Button>
+            <Button size="icon" variant="ghost" onClick={handleDelete}>
+              <Trash size={16} />
+            </Button>
+          </div>
         </>
       ) : (
         <Button size="icon" variant="ghost" onClick={() => setIsAddOpen(true)}>
