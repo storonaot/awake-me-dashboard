@@ -1,3 +1,4 @@
+import { DailyStats } from '@/features/daily-stats/ui'
 import { useProjectActions, useProjects } from '@/features/project/model'
 import { AddProjectModal, EditProjectModal, ProjectActionsMenu } from '@/features/project/ui'
 import { SegmentGroup } from '@/features/segment-group/ui'
@@ -113,7 +114,9 @@ const TodayProjects = () => {
             </li>
           ))}
         </ul>
-        <div>Stats</div>
+        <div className="mt-6">
+          <DailyStats date={formattedDate} projectIds={data?.map(p => p.id) ?? []} />
+        </div>
         {editModalProject && (
           <EditProjectModal
             open={!!editModalProject}

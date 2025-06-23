@@ -9,3 +9,4 @@ export {
 } from './dropdown-menu'
 export { Badge } from './badge'
 export { Toaster } from './sonner'
+export { Progress } from './progress'
