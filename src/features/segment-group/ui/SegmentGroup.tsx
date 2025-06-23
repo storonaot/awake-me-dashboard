@@ -1,6 +1,6 @@
 import { useState, type FC } from 'react'
-import { Pencil, Trash } from 'lucide-react'
-import { Button } from '@/shared/ui'
+import { Pencil, Trash, Upload } from 'lucide-react'
+import { Badge, Button } from '@/shared/ui'
 import {
   useSegmentGroupByProjectAndDate,
   useSegmentGroupActions,
@@ -11,6 +11,8 @@ import {
   EditSegmentGroupModal,
 } from '@/features/segment-group/ui'
 import { cn } from '@/shared/libs/utils'
+import { useImportSegmentGroupFromPreviousDay } from '../model/useImportSegmentGroupFromPreviousDay'
+import { toast } from 'sonner'
 
 type SegmentGroupProps = {
   date: string
@@ -21,6 +23,7 @@ type SegmentGroupProps = {
 const SegmentGroup: FC<SegmentGroupProps> = ({ date, projectId, disabled }) => {
   const { data, isLoading, error } = useSegmentGroupByProjectAndDate({ projectId, date })
   const { updateSegmentGroup, deleteSegmentGroup } = useSegmentGroupActions()
+  const importFromPrevious = useImportSegmentGroupFromPreviousDay()
 
   const [isAddOpen, setIsAddOpen] = useState(false)
   const [isEditOpen, setIsEditOpen] = useState(false)
@@ -43,6 +46,15 @@ const SegmentGroup: FC<SegmentGroupProps> = ({ date, projectId, disabled }) => {
     }
   }
 
+  const handleImport = async () => {
+    try {
+      await importFromPrevious.mutateAsync({ projectId, date })
+      toast.success('Сегменты импортированы из последнего дня')
+    } catch {
+      toast.error('Не удалось найти предыдущие сегменты')
+    }
+  }
+
   if (isLoading) return <div>Загрузка сегментов...</div>
   if (error) return <div>Ошибка загрузки сегментов</div>
 
@@ -60,6 +72,7 @@ const SegmentGroup: FC<SegmentGroupProps> = ({ date, projectId, disabled }) => {
                   isCompleted={index < (data.completed || 0)}
                 />
               ))}
+              {data.label && <Badge>{data.label}</Badge>}
               <div className="flex gap-1">
                 <Button size="icon" variant="ghost" onClick={() => setIsEditOpen(true)}>
                   <Pencil size={16} />
@@ -68,12 +81,16 @@ const SegmentGroup: FC<SegmentGroupProps> = ({ date, projectId, disabled }) => {
                   <Trash size={16} />
                 </Button>
               </div>
-              <div>{data.label}</div>
             </>
           ) : (
-            <Button size="icon" variant="ghost" onClick={() => setIsAddOpen(true)}>
-              +
-            </Button>
+            <>
+              <Button size="icon" variant="ghost" onClick={() => setIsAddOpen(true)}>
+                +
+              </Button>
+              <Button size="icon" variant="ghost" onClick={handleImport}>
+                <Upload size={16} />
+              </Button>
+            </>
           )}
 
           <AddSegmentGroupModal

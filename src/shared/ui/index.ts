@@ -7,3 +7,5 @@ export {
   DropdownMenuContent,
   DropdownMenuItem,
 } from './dropdown-menu'
+export { Badge } from './badge'
+export { Toaster } from './sonner'
