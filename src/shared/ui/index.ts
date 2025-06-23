@@ -10,3 +10,4 @@ export {
 export { Badge } from './badge'
 export { Toaster } from './sonner'
 export { Progress } from './progress'
+export { ScrollArea } from './scroll-area'
