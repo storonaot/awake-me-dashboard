@@ -5,7 +5,7 @@ import { format } from 'date-fns'
 import { useMemo } from 'react'
 
 export const useProgressGridData = (dateRange: string[]) => {
-  const { data: projects, isLoading: isProjectsLoading } = useProjects()
+  const { data: projects, isLoading: isProjectsLoading } = useProjects({ includeArchived: true })
   const projectIds = useMemo(() => projects?.map(p => p.id) ?? [], [projects])
 
   const { data: segmentGroups, isLoading: isGroupsLoading } = useSegmentGroupsInRange(

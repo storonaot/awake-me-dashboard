@@ -10,9 +10,16 @@ import {
   updateDoc,
   deleteDoc,
   type PartialWithFieldValue,
+  QueryConstraint,
 } from 'firebase/firestore'
-import type { NewProject, Project } from './types'
-import { PROJECT_FIELDS, PROJECTS_COLLECTION_NAME } from './constants'
+import {
+  type GetProjectsOptions,
+  type NewProject,
+  type Project,
+  PROJECTS_COLLECTION_NAME,
+  PROJECT_FIELDS,
+} from '@/entities/project/model'
+
 import { withApiErrorHandling } from '@/shared/libs/error-handling'
 
 export const addProjectAPI = async (title: string): Promise<string> => {
@@ -34,7 +41,7 @@ export const addProjectAPI = async (title: string): Promise<string> => {
   return docRef.id
 }
 
-export const getProjectsAPI = async (): Promise<Project[]> => {
+export const getProjectsAPI_deprecated = async (): Promise<Project[]> => {
   const q = query(
     collection(db, PROJECTS_COLLECTION_NAME),
     where(PROJECT_FIELDS.isArchived, '==', false),
@@ -49,21 +56,36 @@ export const getProjectsAPI = async (): Promise<Project[]> => {
       ...doc.data(),
       createdAt: doc.data().createdAt?.toDate().toISOString(),
     })) as Project[]
-  }, 'getProjectsAPI')
+  }, 'getProjectsAPI_deprecated')
+}
 
-  // try {
-  //   const snapshot = await getDocs(q)
+export const getProjectsAPI = async ({
+  includeArchived = false,
+  includeHidden = false,
+}: GetProjectsOptions = {}): Promise<Project[]> => {
+  const constraints: QueryConstraint[] = []
 
-  //   return snapshot.docs.map(doc => ({
-  //     id: doc.id,
-  //     ...doc.data(),
-  //     createdAt: doc.data().createdAt?.toDate().toISOString(),
-  //   })) as Project[]
-  // } catch (error) {
-  //   console.error('getProjectsAPI', error)
+  if (!includeArchived) {
+    constraints.push(where(PROJECT_FIELDS.isArchived, '==', false))
+  }
 
-  //   throw new Error('getProjectsAPI ERROR')
-  // }
+  if (!includeHidden) {
+    constraints.push(where(PROJECT_FIELDS.isHidden, 'in', [false, null]))
+  }
+
+  const q = query(collection(db, PROJECTS_COLLECTION_NAME), ...constraints)
+
+  try {
+    const snapshot = await getDocs(q)
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+      createdAt: doc.data().createdAt?.toDate().toISOString(),
+    })) as Project[]
+  } catch (error) {
+    console.error('getProjectsAPI', error)
+    throw new Error('getProjectsAPI ERROR')
+  }
 }
 
 export const updateProjectAPI = async (

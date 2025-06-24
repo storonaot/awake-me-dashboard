@@ -36,7 +36,6 @@ export const addSegmentGroupAPI = async ({
 
   const newGroup = {
     projectId,
-    // date,
     date: Timestamp.fromDate(new Date(date)),
     label: label ?? null, // если label не передан, сохраняем null
     total: total || 0,

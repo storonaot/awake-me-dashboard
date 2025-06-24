@@ -9,3 +9,9 @@ export type Project = {
 export type NewProject = Omit<Project, 'id' | 'createdAt'> & {
   createdAt: unknown
 }
+
+// API types
+export interface GetProjectsOptions {
+  includeArchived?: boolean
+  includeHidden?: boolean
+}

@@ -1,2 +1,2 @@
 export { useProjectActions } from './useProjectActions'
-export { useProjects } from './useProjects'
+export { useProjects_deprecated, useProjects } from './useProjects'
