@@ -74,24 +74,6 @@ export const getSegmentGroupByProjectAndDateAPI = async (
       createdAt: docData.createdAt?.toDate(),
     } as SegmentGroup
   }, 'getSegmentGroupByProjectAndDateAPI')
-
-  // try {
-  //   const snapshot = await getDocs(q)
-
-  //   if (snapshot.empty) return null
-  //   if (snapshot.size > 1) throw new Error('Найдено несколько групп на одну дату и проект')
-
-  //   const docData = snapshot.docs[0].data()
-  //   return {
-  //     id: snapshot.docs[0].id,
-  //     ...docData,
-  //     createdAt: docData.createdAt?.toDate(),
-  //   } as SegmentGroup
-  // } catch (error) {
-  //   console.error('getSegmentGroupByProjectAndDateAPI', error)
-
-  //   throw new Error('getSegmentGroupByProjectAndDateAPI ERROR')
-  // }
 }
 
 type CleanedUpdates = {
@@ -156,25 +138,6 @@ export const getLastSegmentGroupForProjectAPI = async (
       date: data.date?.toDate(), // если ты хочешь использовать JS Date на клиенте
     } as SegmentGroup
   }, 'getLastSegmentGroupForProjectAPI')
-
-  // try {
-  //   const snapshot = await getDocs(q)
-
-  //   if (snapshot.empty) return null
-
-  //   const doc = snapshot.docs[0]
-  //   const data = doc.data()
-
-  //   return {
-  //     id: doc.id,
-  //     ...data,
-  //     createdAt: data.createdAt?.toDate(),
-  //     date: data.date?.toDate(), // если ты хочешь использовать JS Date на клиенте
-  //   } as SegmentGroup
-  // } catch (error) {
-  //   console.error('err', error)
-  //   throw new Error('getLastSegmentGroupForProjectAPI ERROR')
-  // }
 }
 
 export const getSegmentGroupsInRangeAPI = async (
@@ -207,21 +170,4 @@ export const getSegmentGroupsInRangeAPI = async (
         }) as SegmentGroup
     )
   }, 'getSegmentGroupsInRangeAPI')
-
-  // try {
-  //   const snapshot = await getDocs(q)
-
-  //   return snapshot.docs.map(
-  //     doc =>
-  //       ({
-  //         id: doc.id,
-  //         ...doc.data(),
-  //         createdAt: doc.data().createdAt?.toDate(),
-  //         date: doc.data().date?.toDate(),
-  //       }) as SegmentGroup
-  //   )
-  // } catch (error) {
-  //   console.error('getSegmentGroupsInRangeAPI', error)
-  //   throw new Error('getSegmentGroupsInRangeAPI ERROR')
-  // }
 }

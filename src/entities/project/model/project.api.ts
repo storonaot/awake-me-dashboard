@@ -91,13 +91,4 @@ async function checkProjectExists(title: string) {
     const snapshot = await getDocs(q)
     return !snapshot.empty
   }, 'helper checkProjectExists')
-
-  // try {
-  //   const snapshot = await getDocs(q)
-  //   return !snapshot.empty
-  // } catch (error) {
-  //   console.error('helpers checkProjectExists', error)
-
-  //   throw new Error('helpers checkProjectExists ERROR')
-  // }
 }
