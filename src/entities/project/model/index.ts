@@ -1,9 +1,3 @@
-export {
-  addProjectAPI,
-  getProjectsAPI_deprecated,
-  updateProjectAPI,
-  deleteProjectAPI,
-  getProjectsAPI,
-} from './project.api'
+export { addProjectAPI, updateProjectAPI, deleteProjectAPI, getProjectsAPI } from './project.api'
 export type { Project, NewProject, GetProjectsOptions } from './types'
 export { PROJECT_FIELDS, PROJECTS_CACHE_KEY, PROJECTS_COLLECTION_NAME } from './constants'

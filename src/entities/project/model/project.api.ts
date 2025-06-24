@@ -41,24 +41,6 @@ export const addProjectAPI = async (title: string): Promise<string> => {
   return docRef.id
 }
 
-export const getProjectsAPI_deprecated = async (): Promise<Project[]> => {
-  const q = query(
-    collection(db, PROJECTS_COLLECTION_NAME),
-    where(PROJECT_FIELDS.isArchived, '==', false),
-    where(PROJECT_FIELDS.isHidden, 'in', [false, null]) // фильтруем удалённые
-  )
-
-  return withApiErrorHandling(async () => {
-    const snapshot = await getDocs(q)
-
-    return snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-      createdAt: doc.data().createdAt?.toDate().toISOString(),
-    })) as Project[]
-  }, 'getProjectsAPI_deprecated')
-}
-
 export const getProjectsAPI = async ({
   includeArchived = false,
   includeHidden = false,
