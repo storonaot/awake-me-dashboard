@@ -1,9 +1,9 @@
-import { getProjectsAPI } from '@/entities/project/model'
+import { getProjectsAPI, PROJECTS_CACHE_KEY } from '@/entities/project/model'
 import { useQuery } from '@tanstack/react-query'
 
 export const useProjects = () => {
   return useQuery({
-    queryKey: ['projects'],
+    queryKey: [PROJECTS_CACHE_KEY],
     queryFn: getProjectsAPI,
   })
 }

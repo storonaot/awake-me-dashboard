@@ -5,16 +5,17 @@ import {
   addProjectAPI,
   PROJECT_FIELDS,
   type Project,
+  PROJECTS_CACHE_KEY,
 } from '@/entities/project/model'
 
 export const useProjectActions = () => {
   const queryClient = useQueryClient()
 
-  const _invalidate = () => queryClient.invalidateQueries({ queryKey: ['projects'] })
+  const _invalidate = () => queryClient.invalidateQueries({ queryKey: [PROJECTS_CACHE_KEY] })
 
   const add = useMutation({
     mutationFn: addProjectAPI,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['projects'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [PROJECTS_CACHE_KEY] }),
     onError: (error: Error) => {
       alert(error.message)
     },
@@ -22,7 +23,7 @@ export const useProjectActions = () => {
 
   const remove = useMutation({
     mutationFn: deleteProjectAPI,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['projects'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [PROJECTS_CACHE_KEY] }),
   })
 
   const archive = useMutation({

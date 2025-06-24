@@ -12,3 +12,5 @@ export const SEGMENT_GROUP_FIELDS = {
 } as const satisfies Record<keyof SegmentGroup, string>
 
 export const SEGMENT_GROUPS_COLLECTION_NAME = 'segmentGroups'
+
+export const SEGMENT_GROUPS_CACHE_KEY = 'segmentGroup'

@@ -1,3 +1,4 @@
+import { SEGMENT_GROUPS_CACHE_KEY } from '@/entities/segment-group/model'
 import {
   addSegmentGroupAPI,
   getLastSegmentGroupForProjectAPI,
@@ -30,7 +31,7 @@ export const useImportSegmentGroupFromPreviousDay = () => {
       toast('Сегменты импортированы', {
         description: 'Скопированы из последнего активного дня',
       })
-      queryClient.invalidateQueries({ queryKey: ['segmentGroup'] })
+      queryClient.invalidateQueries({ queryKey: [SEGMENT_GROUPS_CACHE_KEY] })
     },
     onError: () => {
       toast.error('Ошибка импорта', {

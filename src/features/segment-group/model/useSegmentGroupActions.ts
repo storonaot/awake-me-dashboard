@@ -4,12 +4,13 @@ import {
   updateSegmentGroupAPI,
   deleteSegmentGroupAPI,
   type SegmentGroup,
+  SEGMENT_GROUPS_CACHE_KEY,
 } from '@/entities/segment-group/model'
 
 export const useSegmentGroupActions = () => {
   const queryClient = useQueryClient()
 
-  const _invalidate = () => queryClient.invalidateQueries({ queryKey: ['segmentGroup'] })
+  const _invalidate = () => queryClient.invalidateQueries({ queryKey: [SEGMENT_GROUPS_CACHE_KEY] })
 
   const add = useMutation({
     mutationFn: addSegmentGroupAPI,
@@ -19,7 +20,19 @@ export const useSegmentGroupActions = () => {
   const update = useMutation({
     mutationFn: ({ id, updates }: { id: string; updates: Partial<SegmentGroup> }) =>
       updateSegmentGroupAPI(id, updates),
-    onSuccess: _invalidate,
+    onSuccess: (_data, variables) => {
+      const { updates } = variables
+      const date = updates.date as string
+      const projectId = updates.projectId as string
+
+      // точечная инвалидизация по ключу
+      if (date && projectId) {
+        queryClient.invalidateQueries({ queryKey: [SEGMENT_GROUPS_CACHE_KEY, projectId, date] })
+      }
+
+      // и общая, если кто-то подписан на весь список
+      queryClient.invalidateQueries({ queryKey: [SEGMENT_GROUPS_CACHE_KEY] })
+    },
   })
 
   const remove = useMutation({

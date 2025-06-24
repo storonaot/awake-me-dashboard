@@ -5,3 +5,5 @@ export {
   updateSegmentGroupAPI,
   deleteSegmentGroupAPI,
 } from './segment-group.api'
+
+export { SEGMENT_GROUPS_CACHE_KEY } from './constants'
