@@ -6,6 +6,7 @@ export const PROJECT_FIELDS = {
   createdAt: 'createdAt',
   isArchived: 'isArchived',
   isHidden: 'isHidden',
+  activeDate: 'activeDate',
 } as const satisfies Record<keyof Project, string>
 
 export const PROJECTS_COLLECTION_NAME = 'projects'

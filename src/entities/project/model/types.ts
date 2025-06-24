@@ -4,6 +4,7 @@ export type Project = {
   createdAt: string // ISO timestamp или toDate().toISOString()
   isArchived: boolean
   isHidden: boolean
+  activeDate?: string
 }
 
 export type NewProject = Omit<Project, 'id' | 'createdAt'> & {

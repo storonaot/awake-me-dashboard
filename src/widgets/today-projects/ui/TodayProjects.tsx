@@ -1,5 +1,5 @@
 import { DailyStats } from '@/features/daily-stats/ui'
-import { useProjectActions, useProjects } from '@/features/project/model'
+import { useActiveProjectActions, useProjectActions, useProjects } from '@/features/project/model'
 import { AddProjectModal, EditProjectModal, ProjectActionsMenu } from '@/features/project/ui'
 import { SegmentGroup } from '@/features/segment-group/ui'
 import { cn } from '@/shared/libs/utils'
@@ -60,6 +60,17 @@ const TodayProjects = () => {
     setSelectedDate(prev => addDays(prev, 1))
   }
 
+  const { setActive } = useActiveProjectActions()
+
+  const handleToggleActive = (projectId: string, currentActiveDate?: string) => {
+    if (!isToday(selectedDate)) return
+    if (currentActiveDate === formattedDate) {
+      setActive.mutate({ projectId, date: null }) // сброс активности
+    } else {
+      setActive.mutate({ projectId, date: formattedDate })
+    }
+  }
+
   const isPast = isBefore(selectedDate, startOfDay(new Date()))
 
   return (
@@ -93,26 +104,38 @@ const TodayProjects = () => {
         {!data?.length && <p>Проектов пока нет</p>}
 
         <ul className="grid gap-2">
-          {data?.map(project => (
-            <li
-              key={project.id}
-              className="grid grid-cols-[2fr_7fr_auto] items-center gap-4 p-2 border rounded-md"
-            >
-              <span className="truncate">{project.title}</span>
-              <div className="flex flex-wrap gap-1">
-                <SegmentGroup projectId={project.id} date={formattedDate} disabled={isPast} />
-              </div>
-              <div className="flex gap-1">
-                <ProjectActionsMenu
-                  onArchive={() => handleArchive(project.id)}
-                  onHide={() => handleHide(project.id)}
-                  onDelete={() => handleDelete(project.id)}
-                  onEdit={() => setEditModalProject({ id: project.id, title: project.title })}
-                  disabled={isPast}
-                />
-              </div>
-            </li>
-          ))}
+          {data?.map(project => {
+            const isActive = project.activeDate === formattedDate
+
+            return (
+              <li
+                key={project.id}
+                className={cn(
+                  'grid grid-cols-[2fr_7fr_auto] items-center gap-4 p-2 border rounded-md cursor-pointer transition-colors',
+                  isActive && isToday(selectedDate) && 'bg-green-200'
+                )}
+              >
+                <span className="truncate">{project.title}</span>
+                <div className="flex flex-wrap gap-1">
+                  <SegmentGroup projectId={project.id} date={formattedDate} disabled={isPast} />
+                  {!isActive && (
+                    <Button onClick={() => handleToggleActive(project.id, project.activeDate)}>
+                      Сделать активным
+                    </Button>
+                  )}
+                </div>
+                <div className="flex gap-1">
+                  <ProjectActionsMenu
+                    onArchive={() => handleArchive(project.id)}
+                    onHide={() => handleHide(project.id)}
+                    onDelete={() => handleDelete(project.id)}
+                    onEdit={() => setEditModalProject({ id: project.id, title: project.title })}
+                    disabled={isPast}
+                  />
+                </div>
+              </li>
+            )
+          })}
         </ul>
         <div className="mt-6">
           <DailyStats date={formattedDate} projectIds={data?.map(p => p.id) ?? []} />

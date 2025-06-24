@@ -76,7 +76,7 @@ export const getSegmentGroupByProjectAndDateAPI = async (
 }
 
 type CleanedUpdates = {
-  [key: string]: FieldValue | string | number | boolean | null
+  [key: string]: Nullable<FieldValue | string | number | boolean>
 }
 
 export const updateSegmentGroupAPI = async (
@@ -93,7 +93,7 @@ export const updateSegmentGroupAPI = async (
     if (key === 'label' && value === '') {
       cleanedUpdates[key] = null
     } else {
-      cleanedUpdates[key] = value as string | number | boolean | FieldValue | null
+      cleanedUpdates[key] = value as Nullable<string | number | boolean | FieldValue>
     }
   }
 
@@ -108,7 +108,7 @@ export const deleteSegmentGroupAPI = async (id: string): Promise<void> => {
 export const getLastSegmentGroupForProjectAPI = async (
   projectId: string,
   beforeDate: string // например: "2025-06-23"
-): Promise<SegmentGroup | null> => {
+): Promise<Nullable<SegmentGroup>> => {
   const ref = collection(db, SEGMENT_GROUPS_COLLECTION_NAME)
 
   // Переводим строку в Timestamp

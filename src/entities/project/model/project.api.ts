@@ -11,6 +11,8 @@ import {
   deleteDoc,
   type PartialWithFieldValue,
   QueryConstraint,
+  writeBatch,
+  deleteField,
 } from 'firebase/firestore'
 import {
   type GetProjectsOptions,
@@ -21,6 +23,7 @@ import {
 } from '@/entities/project/model'
 
 import { withApiErrorHandling } from '@/shared/libs/error-handling'
+import type { Nullable } from '@/shared/utils/utility-types'
 
 export const addProjectAPI = async (title: string): Promise<string> => {
   const exists = await checkProjectExists(title)
@@ -81,6 +84,29 @@ export const updateProjectAPI = async (
 export const deleteProjectAPI = async (id: string): Promise<void> => {
   const ref = doc(db, PROJECTS_COLLECTION_NAME, id)
   await deleteDoc(ref)
+}
+
+export const setActiveProjectForDateAPI = async (projectId: string, date?: Nullable<string>) => {
+  withApiErrorHandling(async () => {
+    const q = query(
+      collection(db, PROJECTS_COLLECTION_NAME),
+      where(PROJECT_FIELDS.activeDate, '==', date)
+    )
+    const snapshot = await getDocs(q)
+
+    const batch = writeBatch(db)
+
+    // Сброс всех активных проектов
+    snapshot.docs.forEach(doc => {
+      batch.update(doc.ref, { [PROJECT_FIELDS.activeDate]: deleteField() })
+    })
+
+    // Назначение нового активного проекта
+    const targetRef = doc(db, PROJECTS_COLLECTION_NAME, projectId)
+    batch.update(targetRef, { [PROJECT_FIELDS.activeDate]: date })
+
+    await batch.commit()
+  }, 'setActiveProjectForDateAPI')
 }
 
 // ——— helpers ———
