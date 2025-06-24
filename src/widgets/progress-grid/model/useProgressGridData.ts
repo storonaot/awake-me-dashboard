@@ -14,8 +14,6 @@ export const useProgressGridData = (dateRange: string[]) => {
     dateRange[dateRange.length - 1]
   )
 
-  console.log('segmentGroups', segmentGroups)
-
   const segmentMap = useMemo(() => {
     const map = new Map<string, Map<string, SegmentGroup>>()
     segmentGroups?.forEach(group => {

@@ -13,6 +13,7 @@ import {
 } from 'firebase/firestore'
 import type { NewProject, Project } from './types'
 import { PROJECT_FIELDS, PROJECTS_COLLECTION_NAME } from './constants'
+import { withApiErrorHandling } from '@/shared/libs/error-handling'
 
 export const addProjectAPI = async (title: string): Promise<string> => {
   const exists = await checkProjectExists(title)
@@ -40,13 +41,29 @@ export const getProjectsAPI = async (): Promise<Project[]> => {
     where(PROJECT_FIELDS.isHidden, 'in', [false, null]) // фильтруем удалённые
   )
 
-  const snapshot = await getDocs(q)
+  return withApiErrorHandling(async () => {
+    const snapshot = await getDocs(q)
 
-  return snapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data(),
-    createdAt: doc.data().createdAt?.toDate().toISOString(),
-  })) as Project[]
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+      createdAt: doc.data().createdAt?.toDate().toISOString(),
+    })) as Project[]
+  }, 'getProjectsAPI')
+
+  // try {
+  //   const snapshot = await getDocs(q)
+
+  //   return snapshot.docs.map(doc => ({
+  //     id: doc.id,
+  //     ...doc.data(),
+  //     createdAt: doc.data().createdAt?.toDate().toISOString(),
+  //   })) as Project[]
+  // } catch (error) {
+  //   console.error('getProjectsAPI', error)
+
+  //   throw new Error('getProjectsAPI ERROR')
+  // }
 }
 
 export const updateProjectAPI = async (
@@ -69,6 +86,18 @@ async function checkProjectExists(title: string) {
     where(PROJECT_FIELDS.title, '==', title),
     where(PROJECT_FIELDS.isArchived, '==', false)
   )
-  const snapshot = await getDocs(q)
-  return !snapshot.empty
+
+  return withApiErrorHandling(async () => {
+    const snapshot = await getDocs(q)
+    return !snapshot.empty
+  }, 'helper checkProjectExists')
+
+  // try {
+  //   const snapshot = await getDocs(q)
+  //   return !snapshot.empty
+  // } catch (error) {
+  //   console.error('helpers checkProjectExists', error)
+
+  //   throw new Error('helpers checkProjectExists ERROR')
+  // }
 }
