@@ -11,7 +11,7 @@ import {
   EditSegmentGroupModal,
 } from '@/features/segment-group/ui'
 import { cn } from '@/shared/libs/utils'
-import { useImportSegmentGroupFromPreviousDay } from '../model/useImportSegmentGroupFromPreviousDay'
+import { useImportSegmentGroupFromPreviousDay } from '@/features/segment-group/model'
 import { toast } from 'sonner'
 
 type SegmentGroupProps = {

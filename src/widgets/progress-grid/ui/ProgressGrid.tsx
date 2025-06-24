@@ -1,7 +1,7 @@
 import { format, addDays, startOfDay } from 'date-fns'
-import { useProjects } from '@/features/project/model'
-import { useMemo } from 'react'
 import { ScrollArea } from '@/shared/ui'
+import { useMemo } from 'react'
+import { useProgressGridData } from '../model/useProgressGridData'
 
 const getDateRange = (center: Date, before = 7, after = 7): string[] => {
   const dates: string[] = []
@@ -13,11 +13,14 @@ const getDateRange = (center: Date, before = 7, after = 7): string[] => {
 }
 
 const ProgressGrid = () => {
-  const { data: projects, isLoading } = useProjects()
   const today = startOfDay(new Date())
   const dateRange = useMemo(() => getDateRange(today), [today])
+  const { projects, segmentMap, isProjectsLoading, isGroupsLoading } =
+    useProgressGridData(dateRange)
 
-  if (isLoading) return <p className="text-sm text-muted-foreground">Загрузка...</p>
+  if (isProjectsLoading)
+    return <p className="text-sm text-muted-foreground">Загрузка проектов...</p>
+
   if (!projects?.length) return <p className="text-sm text-muted-foreground">Нет проектов</p>
 
   return (
@@ -42,11 +45,14 @@ const ProgressGrid = () => {
               <td className="sticky left-0 bg-background z-10 p-2 border-r truncate max-w-[150px] min-w-[100px]">
                 {project.title}
               </td>
-              {dateRange.map(date => (
-                <td key={date} className="text-center p-1">
-                  {/* TODO: сюда придёт мини-компонент отображения сегментов */}-
-                </td>
-              ))}
+              {dateRange.map(date => {
+                const group = segmentMap.get(project.id)?.get(date)
+                return (
+                  <td key={date} className="text-center p-1">
+                    {isGroupsLoading ? '...' : group ? `${group.completed}/${group.total}` : '-'}
+                  </td>
+                )
+              })}
             </tr>
           ))}
         </tbody>

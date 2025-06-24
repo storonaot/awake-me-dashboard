@@ -125,7 +125,6 @@ export const getLastSegmentGroupForProjectAPI = async (
     if (snapshot.empty) return null
 
     const doc = snapshot.docs[0]
-
     const data = doc.data()
 
     return {
@@ -136,6 +135,41 @@ export const getLastSegmentGroupForProjectAPI = async (
     } as SegmentGroup
   } catch (error) {
     console.error('err', error)
-    return null
+    throw new Error('getLastSegmentGroupForProjectAPI ERROR')
+  }
+}
+
+export const getSegmentGroupsInRangeAPI = async (
+  projectIds: string[],
+  start: string, // формат yyyy-MM-dd
+  end: string
+): Promise<SegmentGroup[]> => {
+  const ref = collection(db, SEGMENT_GROUPS_COLLECTION_NAME)
+
+  const startTimestamp = Timestamp.fromDate(new Date(start))
+  const endTimestamp = Timestamp.fromDate(new Date(end))
+
+  const q = query(
+    ref,
+    where('projectId', 'in', projectIds),
+    where('date', '>=', startTimestamp),
+    where('date', '<=', endTimestamp)
+  )
+
+  try {
+    const snapshot = await getDocs(q)
+
+    return snapshot.docs.map(
+      doc =>
+        ({
+          id: doc.id,
+          ...doc.data(),
+          createdAt: doc.data().createdAt?.toDate(),
+          date: doc.data().date?.toDate(),
+        }) as SegmentGroup
+    )
+  } catch (error) {
+    console.error('getSegmentGroupsInRangeAPI', error)
+    throw new Error('getSegmentGroupsInRangeAPI ERROR')
   }
 }

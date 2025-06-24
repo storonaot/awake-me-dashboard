@@ -13,4 +13,6 @@ export const SEGMENT_GROUP_FIELDS = {
 
 export const SEGMENT_GROUPS_COLLECTION_NAME = 'segmentGroups'
 
+// CACHE_KEYS
 export const SEGMENT_GROUPS_CACHE_KEY = 'segmentGroup'
+export const SEGMENT_GROUPS_IN_RANGE_CACHE_KEY = 'segmentGroupsInRange'
