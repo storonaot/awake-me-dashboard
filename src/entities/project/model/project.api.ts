@@ -48,6 +48,8 @@ export const getProjectsAPI = async ({
   includeArchived = false,
   includeHidden = false,
 }: GetProjectsOptions = {}): Promise<Project[]> => {
+  console.log('FETCH projects')
+
   const constraints: QueryConstraint[] = []
 
   if (!includeArchived) {

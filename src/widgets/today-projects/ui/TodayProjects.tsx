@@ -31,6 +31,8 @@ const TodayProjects = () => {
   const { data, isLoading, error } = useProjects()
   const { deleteProject, archiveProject, hideProject } = useProjectActions()
 
+  console.log('data', data)
+
   const handleDelete = useCallback(
     (id: string) => {
       if (confirm('Удалить проект?')) deleteProject.mutate(id)

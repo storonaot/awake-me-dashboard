@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 
 export const useProjects = (options?: GetProjectsOptions) => {
   return useQuery({
-    queryKey: [PROJECTS_CACHE_KEY, options],
+    queryKey: [PROJECTS_CACHE_KEY],
     queryFn: () => getProjectsAPI(options),
   })
 }

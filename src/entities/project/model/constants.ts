@@ -10,5 +10,4 @@ export const PROJECT_FIELDS = {
 } as const satisfies Record<keyof Project, string>
 
 export const PROJECTS_COLLECTION_NAME = 'projects'
-
 export const PROJECTS_CACHE_KEY = 'projects'
