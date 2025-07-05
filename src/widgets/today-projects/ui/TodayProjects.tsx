@@ -31,8 +31,6 @@ const TodayProjects = () => {
   const { data, isLoading, error } = useProjects()
   const { deleteProject, archiveProject, hideProject } = useProjectActions()
 
-  console.log('data', data)
-
   const handleDelete = useCallback(
     (id: string) => {
       if (confirm('Удалить проект?')) deleteProject.mutate(id)
@@ -117,14 +115,14 @@ const TodayProjects = () => {
                   isActive && isToday(selectedDate) && 'bg-green-200'
                 )}
               >
-                <span className="truncate">{project.title}</span>
+                <span
+                  className="truncate"
+                  onClick={() => handleToggleActive(project.id, project.activeDate)}
+                >
+                  {project.title}
+                </span>
                 <div className="flex flex-wrap gap-1">
                   <SegmentGroup projectId={project.id} date={formattedDate} disabled={isPast} />
-                  {!isActive && (
-                    <Button onClick={() => handleToggleActive(project.id, project.activeDate)}>
-                      Сделать активным
-                    </Button>
-                  )}
                 </div>
                 <div className="flex gap-1">
                   <ProjectActionsMenu

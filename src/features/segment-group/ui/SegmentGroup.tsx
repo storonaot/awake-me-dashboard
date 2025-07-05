@@ -110,9 +110,6 @@ const SegmentGroup: FC<SegmentGroupProps> = ({ date, projectId, disabled }) => {
           )}
         </div>
       </div>
-      {disabled && (
-        <div className="absolute inset-0 z-10 bg-white/50 backdrop-blur-sm rounded-md" />
-      )}
     </div>
   )
 }
