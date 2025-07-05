@@ -1,15 +1,11 @@
 import { useState, type FC } from 'react'
 import { Pencil, Trash, Upload } from 'lucide-react'
-import { Badge, Button } from '@/shared/ui'
+import { Badge, Button, ToggleCell } from '@/shared/ui'
 import {
   useSegmentGroupByProjectAndDate,
   useSegmentGroupActions,
 } from '@/features/segment-group/model'
-import {
-  SegmentCell,
-  AddSegmentGroupModal,
-  EditSegmentGroupModal,
-} from '@/features/segment-group/ui'
+import { AddSegmentGroupModal, EditSegmentGroupModal } from '@/features/segment-group/ui'
 import { cn } from '@/shared/libs/utils'
 import { useImportSegmentGroupFromPreviousDay } from '@/features/segment-group/model'
 import { toast } from 'sonner'
@@ -65,11 +61,10 @@ const SegmentGroup: FC<SegmentGroupProps> = ({ date, projectId, disabled }) => {
           {data ? (
             <>
               {Array.from({ length: data.total }).map((_, index) => (
-                <SegmentCell
+                <ToggleCell
                   key={index}
-                  index={index}
                   onToggle={() => toggleComplete(index)}
-                  isCompleted={index < (data.completed || 0)}
+                  value={index < (data.completed || 0)}
                 />
               ))}
               {data.label && <Badge>{data.label}</Badge>}
