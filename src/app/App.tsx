@@ -1,21 +1,13 @@
-import { AuthGate } from './providers/auth-gate/AuthGate'
-import { TodayProjects } from '@/widgets/today-projects/ui'
-import { MainLayout } from './layouts'
+// App.tsx
+import { RouterProvider } from 'react-router-dom'
 import { Toaster } from '@/shared/ui'
-import { ProgressGrid } from '@/widgets/progress-grid/ui'
+import { router } from './providers/router'
 
-const App = () => {
-  return (
-    <>
-      <AuthGate>
-        <MainLayout>
-          <TodayProjects />
-          <ProgressGrid />
-        </MainLayout>
-      </AuthGate>
-      <Toaster />
-    </>
-  )
-}
+const App = () => (
+  <>
+    <RouterProvider router={router} />
+    <Toaster />
+  </>
+)
 
 export { App }

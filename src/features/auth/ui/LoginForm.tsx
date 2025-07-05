@@ -2,17 +2,17 @@ import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { login } from '../model/auth.api'
 import { Button, Input } from '@/shared/ui'
+import { useNavigate } from 'react-router-dom'
 
 const LoginForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
-  const [haveLoggedIn, setHaveLoggedIn] = useState(false)
+  const navigate = useNavigate()
 
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: () => login(email, password),
     onSuccess: () => {
-      setHaveLoggedIn(true)
+      navigate('/')
     },
   })
 
@@ -45,7 +45,6 @@ const LoginForm = () => {
       </Button>
 
       {isError && <p style={{ color: 'red' }}>{(error as Error).message}</p>}
-      {haveLoggedIn && <p style={{ color: 'green' }}>U have logged in</p>}
     </form>
   )
 }
