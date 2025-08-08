@@ -1,6 +1,7 @@
 import { useSegmentGroupActions } from '@/features/segment-group/model'
+import { SegmentGroupForm } from '@/features/segment-group/ui'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/shared/ui'
-import SegmentGroupForm from './SegmentGroupForm'
+// import SegmentGroupForm from '../../../features/segment-group/ui/SegmentGroupForm'
 import type { FC } from 'react'
 
 type Props = {

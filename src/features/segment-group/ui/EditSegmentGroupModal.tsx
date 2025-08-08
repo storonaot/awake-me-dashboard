@@ -1,6 +1,7 @@
 import { useSegmentGroupActions } from '@/features/segment-group/model'
+import { SegmentGroupForm } from '@/features/segment-group/ui'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/shared/ui'
-import SegmentGroupForm from './SegmentGroupForm'
+// import SegmentGroupForm from './SegmentGroupForm'
 import type { FC } from 'react'
 
 type Props = {
@@ -19,8 +20,6 @@ const EditSegmentGroupModal: FC<Props> = ({
   const { updateSegmentGroup } = useSegmentGroupActions()
 
   const handleSubmit = (values: { label?: string; total: number }) => {
-    debugger
-
     updateSegmentGroup.mutate({
       id: segmentGroupId,
       updates: values,

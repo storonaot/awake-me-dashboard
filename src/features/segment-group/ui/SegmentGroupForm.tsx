@@ -26,7 +26,7 @@ const SegmentGroupForm: FC<SegmentGroupFormProps> = ({
   }, [initialValues])
 
   const handleSubmit = () => {
-    if (total < 1) return
+    if (total < 0) return
     onSubmit({ label: label.trim() || undefined, total })
   }
 
@@ -42,7 +42,7 @@ const SegmentGroupForm: FC<SegmentGroupFormProps> = ({
         placeholder="Количество сегментов"
         value={total}
         onChange={e => setTotal(Number(e.target.value))}
-        min={1}
+        min={0}
         required
       />
       <div className="flex justify-end">

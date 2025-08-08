@@ -1,14 +1,15 @@
 import { useState, type FC } from 'react'
 import { Pencil, Trash, Upload } from 'lucide-react'
-import { Badge, Button, ToggleCell } from '@/shared/ui'
+import { Badge, Button, Cell } from '@/shared/ui'
 import {
   useSegmentGroupByProjectAndDate,
   useSegmentGroupActions,
 } from '@/features/segment-group/model'
-import { AddSegmentGroupModal, EditSegmentGroupModal } from '@/features/segment-group/ui'
 import { cn } from '@/shared/libs/utils'
 import { useImportSegmentGroupFromPreviousDay } from '@/features/segment-group/model'
 import { toast } from 'sonner'
+import AddSegmentGroupModal from './AddSegmentGroupModal'
+import EditSegmentGroupModal from './EditSegmentGroupModal'
 
 type SegmentGroupProps = {
   date: string
@@ -58,13 +59,13 @@ const SegmentGroup: FC<SegmentGroupProps> = ({ date, projectId, disabled }) => {
     <div className="relative">
       <div className={cn('transition-all', disabled && 'pointer-events-none opacity-50 grayscale')}>
         <div className="flex items-center gap-2">
-          {data ? (
+          {data && data.total ? (
             <>
               {Array.from({ length: data.total }).map((_, index) => (
-                <ToggleCell
+                <Cell
                   key={index}
-                  onToggle={() => toggleComplete(index)}
-                  value={index < (data.completed || 0)}
+                  onClick={() => toggleComplete(index)}
+                  filled={index < (data.completed || 0)}
                 />
               ))}
               {data.label && <Badge>{data.label}</Badge>}

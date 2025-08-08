@@ -8,9 +8,11 @@ interface SegmentsLeftIndicatorProps {
 
 const SegmentsLeftIndicator: FC<SegmentsLeftIndicatorProps> = ({ countLeft }) => {
   return (
-    <div>
-      {countLeft}
-      <Cell bordered />
+    <div className="flex items-center gap-2 mb-4">
+      <div>Left: </div>
+      {Array.from({ length: countLeft }).map((_, index) => (
+        <Cell key={index} bordered />
+      ))}
     </div>
   )
 }
