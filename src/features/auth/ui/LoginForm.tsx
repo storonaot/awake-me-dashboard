@@ -4,7 +4,7 @@ import { login } from '../model/auth.api'
 import { Button, Input } from '@/shared/ui'
 import { useNavigate } from 'react-router-dom'
 
-const LoginForm = () => {
+export const LoginForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
@@ -48,5 +48,3 @@ const LoginForm = () => {
     </form>
   )
 }
-
-export default LoginForm

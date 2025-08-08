@@ -1,7 +1,7 @@
 // App.tsx
 import { RouterProvider } from 'react-router-dom'
 import { Toaster } from '@/shared/ui'
-import { router } from './providers/router'
+import { router } from './router'
 
 const App = () => (
   <>

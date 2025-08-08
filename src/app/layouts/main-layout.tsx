@@ -13,9 +13,9 @@ const MainLayout: FC = () => {
         {user && <LogoutButton />}
       </header>
 
-      <main className="flex-1 px-6 py-4">
+      <div className="flex-1">
         <Outlet />
-      </main>
+      </div>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAuthGate } from '@/app/providers/auth-gate/useAuthGate'
+import UserLayout from '@/app/layouts/user-layout'
 
 export const ProtectedRoute = () => {
   const { user, isLoading } = useAuthGate()
@@ -7,5 +8,9 @@ export const ProtectedRoute = () => {
   if (isLoading) return <div>Загрузка...</div>
   if (!user) return <Navigate to="/login" />
 
-  return <Outlet />
+  return (
+    <UserLayout>
+      <Outlet />
+    </UserLayout>
+  )
 }

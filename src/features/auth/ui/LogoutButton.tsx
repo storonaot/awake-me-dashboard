@@ -3,7 +3,7 @@ import { logout } from '../model/auth.api'
 import { Button } from '@/shared/ui'
 import { useNavigate } from 'react-router-dom'
 
-const LogoutButton = () => {
+export const LogoutButton = () => {
   const navigate = useNavigate()
 
   const { mutate, isPending } = useMutation({
@@ -24,5 +24,3 @@ const LogoutButton = () => {
     </Button>
   )
 }
-
-export default LogoutButton

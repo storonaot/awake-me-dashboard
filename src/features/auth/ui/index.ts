@@ -1,2 +1,3 @@
-export { default as LoginForm } from './LoginForm'
-export { default as LogoutButton } from './LogoutButton'
+export { LoginForm } from './LoginForm'
+export { LogoutButton } from './LogoutButton'
+export { ProtectedRoute } from './ProtectedRoute'
