@@ -67,6 +67,7 @@ export const getSegmentGroupByProjectAndDateAPI = async (
     if (snapshot.size > 1) throw new Error('Найдено несколько групп на одну дату и проект')
 
     const docData = snapshot.docs[0].data()
+
     return {
       id: snapshot.docs[0].id,
       ...docData,

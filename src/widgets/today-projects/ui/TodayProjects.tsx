@@ -1,7 +1,7 @@
 import { DailyStats } from '@/features/daily-stats/ui'
 import { useActiveProjectActions, useProjectActions, useProjects } from '@/features/project/model'
 import { AddProjectModal, EditProjectModal, ProjectActionsMenu } from '@/features/project/ui'
-import { SegmentGroup, SegmentsLeftIndicator } from '@/features/segment-group/ui'
+import { SegmentGroup } from '@/features/segment-group/ui'
 import { cn } from '@/shared/libs/utils'
 import { Button } from '@/shared/ui'
 import { addDays, format, isBefore, isToday, isTomorrow, isYesterday, startOfDay } from 'date-fns'
@@ -102,7 +102,7 @@ const TodayProjects = () => {
         {isLoading && <p>Загрузка...</p>}
         {error && <p>Ошибка загрузки</p>}
         {!data?.length && <p>Проектов пока нет</p>}
-        <SegmentsLeftIndicator countLeft={16} />
+        {/* <SegmentsLeftIndicator countLeft={16} /> */}
         <ul className="grid gap-2">
           {data?.map(project => {
             const isActive = project.activeDate === formattedDate

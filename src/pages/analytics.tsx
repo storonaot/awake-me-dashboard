@@ -1,12 +1,7 @@
 import { ProgressGrid } from '@/widgets/progress-grid/ui'
 
 const Analytics = () => {
-  return (
-    <div>
-      this is the page
-      <ProgressGrid />
-    </div>
-  )
+  return <ProgressGrid />
 }
 
 export default Analytics
