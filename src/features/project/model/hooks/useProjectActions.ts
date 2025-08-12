@@ -6,7 +6,7 @@ import {
   PROJECT_FIELDS,
   type Project,
   PROJECTS_CACHE_KEY,
-} from '@/entities/project'
+} from '@/entities/project/model'
 
 export const useProjectActions = () => {
   const queryClient = useQueryClient()

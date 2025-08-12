@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import {
   getSegmentGroupByProjectAndDateAPI,
   SEGMENT_GROUPS_CACHE_KEY,
-} from '@/entities/segment-group'
+} from '@/entities/segment-group/model'
 
 interface Params {
   projectId: string

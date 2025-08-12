@@ -5,7 +5,7 @@ import {
   deleteSegmentGroupAPI,
   type SegmentGroup,
   SEGMENT_GROUPS_CACHE_KEY,
-} from '@/entities/segment-group'
+} from '@/entities/segment-group/model'
 
 export const useSegmentGroupActions = () => {
   const queryClient = useQueryClient()

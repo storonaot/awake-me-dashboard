@@ -1,4 +1,8 @@
-import { PROJECTS_CACHE_KEY, setActiveProjectForDateAPI, type Project } from '@/entities/project'
+import {
+  PROJECTS_CACHE_KEY,
+  setActiveProjectForDateAPI,
+  type Project,
+} from '@/entities/project/model'
 import type { Nullable } from '@/shared/utils/utility-types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 

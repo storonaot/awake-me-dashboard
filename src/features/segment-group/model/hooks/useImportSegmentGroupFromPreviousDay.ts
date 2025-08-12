@@ -1,4 +1,4 @@
-import { SEGMENT_GROUPS_CACHE_KEY } from '@/entities/segment-group'
+import { SEGMENT_GROUPS_CACHE_KEY } from '@/entities/segment-group/model'
 import {
   addSegmentGroupAPI,
   getLastSegmentGroupForProjectAPI,

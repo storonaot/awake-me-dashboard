@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import {
   getSegmentGroupsInRangeAPI,
   SEGMENT_GROUPS_IN_RANGE_CACHE_KEY,
-} from '@/entities/segment-group'
+} from '@/entities/segment-group/model'
 
 export const useSegmentGroupsInRange = (projectIds: string[], start: string, end: string) => {
   return useQuery({
